@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ICEGATE Shipping Bill Status Export</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <header class="page__header">
+        <h1>Shipping Bill Status → Excel</h1>
+        <p>
+          Fetch shipping bill document status from ICEGATE and export the results
+          as an Excel-friendly CSV file.
+        </p>
+      </header>
+
+      <section class="card">
+        <h2>Request Details</h2>
+        <form id="lookup-form" class="form">
+          <label class="field">
+            <span>API URL</span>
+            <input
+              id="api-url"
+              name="apiUrl"
+              type="url"
+              value="https://foservices.icegate.gov.in/"
+              required
+            />
+            <small>Use a full API endpoint that accepts the request.</small>
+          </label>
+
+          <div class="grid">
+            <label class="field">
+              <span>Shipping Bill No.</span>
+              <input id="sb-number" name="sbNumber" type="text" required />
+            </label>
+
+            <label class="field">
+              <span>Shipping Bill Date</span>
+              <input id="sb-date" name="sbDate" type="date" required />
+            </label>
+
+            <label class="field">
+              <span>Port Code</span>
+              <input id="port-code" name="portCode" type="text" />
+            </label>
+          </div>
+
+          <label class="field">
+            <span>HTTP Method</span>
+            <select id="http-method" name="httpMethod">
+              <option value="POST" selected>POST (JSON)</option>
+              <option value="GET">GET (query string)</option>
+            </select>
+          </label>
+
+          <div class="actions">
+            <button type="submit" class="primary">Fetch Status</button>
+            <button type="button" id="download-btn" disabled>
+              Download CSV
+            </button>
+          </div>
+        </form>
+
+        <div class="notice" role="note">
+          <strong>Note:</strong> ICEGATE may block cross-origin browser requests.
+          If you see a CORS error, use a backend proxy and paste that proxy URL
+          above.
+        </div>
+      </section>
+
+      <section class="card" aria-live="polite">
+        <h2>Results</h2>
+        <div id="status" class="status">Waiting for input.</div>
+        <div class="table-wrapper">
+          <table id="results-table" class="table"></table>
+        </div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
